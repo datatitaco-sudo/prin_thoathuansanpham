@@ -14,7 +14,6 @@
         * { box-sizing: border-box; font-family: "Times New Roman", Times, serif; }
         body { background-color: #f0f0f0; margin: 0; padding: 0; }
 
-        /* Khung trang A4 */
         .page {
             width: 210mm;
             min-height: 297mm;
@@ -25,7 +24,6 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
-        /* Watermark DEMO */
         #watermark {
             position: absolute;
             top: 50%;
@@ -39,22 +37,30 @@
             display: none;
         }
 
-        /* Header Layout */
-        .header-table { width: 100%; border: none; border-bottom: 2px solid #ffcc00; margin-bottom: 10px; }
+        /* Tối ưu Header để không xuống dòng */
+        .header-table { width: 100%; border-collapse: collapse; border-bottom: 2px solid #ffcc00; margin-bottom: 10px; }
         
-        /* Tối ưu hiển thị logo */
         .logo-img { 
-            width: 140px; 
+            width: 130px; /* Giảm nhẹ cỡ logo */
             height: auto; 
             display: block;
             object-fit: contain;
         }
 
-        .company-info { text-align: left; padding-left: 15px; }
-        .company-info h2 { margin: 0; color: var(--primary-color); font-size: 18px; text-transform: uppercase; }
-        .company-info p { margin: 2px 0; font-size: 13px; color: #333; }
+        .company-info { text-align: left; padding-left: 10px; vertical-align: middle; }
+        
+        /* Cấu hình đặc biệt cho tên công ty */
+        .company-info h2 { 
+            margin: 0; 
+            color: var(--primary-color); 
+            font-size: 15px; /* Giảm size chữ */
+            text-transform: uppercase; 
+            white-space: nowrap; /* Ép không xuống dòng */
+            letter-spacing: -0.3px; /* Thu hẹp khoảng cách chữ */
+        }
+        
+        .company-info p { margin: 2px 0; font-size: 12px; color: #333; }
 
-        /* Nội dung văn bản */
         .doc-no { text-align: left; font-size: 14px; margin: 10px 0; }
         .doc-title { text-align: center; margin-bottom: 20px; }
         .doc-title h1 { margin: 0; font-size: 22px; text-transform: uppercase; }
@@ -65,19 +71,16 @@
         .info-row { display: flex; margin-bottom: 3px; }
         .label { font-weight: bold; min-width: 120px; }
 
-        /* Bảng hàng hóa */
         table.data-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
         table.data-table th, table.data-table td { border: 1px solid #000; padding: 8px; font-size: 14px; }
         table.data-table th { background-color: #eee; text-align: center; }
         .text-right { text-align: right; }
         .text-center { text-align: center; }
 
-        /* Chữ ký */
         .footer-sign { display: flex; justify-content: space-between; margin-top: 40px; text-align: center; }
         .sign-box { width: 45%; }
         .sign-space { height: 100px; }
 
-        /* Điều khiển */
         .controls { position: fixed; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
         button { padding: 10px 15px; cursor: pointer; border: none; border-radius: 4px; color: white; font-weight: bold; }
         .btn-print { background: #007bff; }
@@ -104,9 +107,8 @@
         <!-- Header -->
         <table class="header-table">
             <tr>
-                <td width="150">
-                    <!-- Link logo đã được cập nhật tới file LOGOTINTAM 2.png trong cùng thư mục -->
-                    <img src="./LOGOTINTAM%202.png" class="logo-img" alt="Logo Tín Tâm">
+                <td width="140">
+                    <img src="./LOGOTINTAM%202.png" class="logo-img" alt="Logo">
                 </td>
                 <td class="company-info">
                     <h2>CÔNG TY TNHH ĐẦU TƯ VÀ PHÁT TRIỂN THƯƠNG MẠI TÍN TÂM</h2>
@@ -146,7 +148,7 @@
         <table class="data-table">
             <thead>
                 <tr>
-                    <th>Stt</th>
+                    <th width="50">Stt</th>
                     <th>Tên Sản Phẩm / Nội Dung</th>
                     <th>ĐVT</th>
                     <th>Số lượng</th>
@@ -180,9 +182,8 @@
             ...
         </div>
         <p><strong>Ghi chú:</strong> <span id="GhiChu">...</span></p>
-        <p><strong>Trạng thái:</strong> <span id="TrangThai">...</span></p>
 
-        <div class="footer-sign">
+        <div class="footer-sign" style="margin-top: 20px;">
             <div class="sign-box">
                 <strong>ĐẠI DIỆN BÊN A</strong><br>Giám đốc
                 <div class="sign-space"></div>
@@ -201,7 +202,6 @@
             Sott: "001_25.HĐMB.TITA",
             LoaiThoaThuan: "Thỏa thuận sản phẩm",
             NgayKy: "02/02/2025",
-            MaKH: "MAG056",
             TenKH: "Chị Nga",
             DaiDien: "YORNG NGA",
             MST: "16020xxxx",
@@ -212,9 +212,8 @@
             TongTien: "222,000,000",
             TuNgay: "10/02/2025",
             DenNgay: "20/02/2025",
-            ChietKhau: "- Bên B thanh toán đủ 50 thùng Cặp ấn độ 240ml tặng thêm 200 USD.\n- Thanh toán đủ 20 thùng Samurai SOTO tặng thêm 01 thùng cùng loại.",
-            GhiChu: "Giao hàng đúng hẹn",
-            TrangThai: "Đang thực hiện"
+            ChietKhau: "- Bên B nhận một lần và thanh toán đủ 50 thùng Cặp ấn độ 240ml bên A sẽ tặng thêm 200 USD cho bên B.\n- Bên B nhận một lần và thanh toán đủ 20 thùng Samurai SOTO 500ml bên A sẽ tặng thêm 01 thùng Samurai SOTO 500ml cho bên B.",
+            GhiChu: "Đang thực hiện"
         };
 
         function init() {
@@ -242,17 +241,14 @@
         }
 
         function downloadPNG() {
-            const btn = document.querySelector('.btn-png');
-            btn.innerText = "Đang xử lý...";
             html2canvas(document.getElementById('capture'), { 
                 scale: 2,
-                useCORS: true // Hỗ trợ load ảnh từ cùng server
+                useCORS: true 
             }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = `ThoaThuan_${document.getElementById('Sott').innerText}.png`;
                 link.href = canvas.toDataURL();
                 link.click();
-                btn.innerText = "Tải ảnh PNG";
             });
         }
 
