@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bản Thỏa Thuận Sản Phẩm - TITACO</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #003366;
+            --text-color: #000;
+        }
+
+        * { box-sizing: border-box; font-family: "Times New Roman", Times, serif; }
+        body { background-color: #f0f0f0; margin: 0; padding: 0; }
+
+        /* Khung trang A4 */
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 10mm 15mm;
+            margin: 10mm auto;
+            background: white;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Watermark DEMO */
+        #watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 150px;
+            color: rgba(150, 150, 150, 0.15);
+            font-weight: bold;
+            z-index: 10;
+            pointer-events: none;
+            display: none;
+        }
+
+        /* Header Layout */
+        .header-table { width: 100%; border: none; border-bottom: 2px solid #ffcc00; margin-bottom: 10px; }
+        .logo-img { width: 100px; height: auto; }
+        .company-info { text-align: left; padding-left: 15px; }
+        .company-info h2 { margin: 0; color: var(--primary-color); font-size: 18px; text-transform: uppercase; }
+        .company-info p { margin: 2px 0; font-size: 13px; color: #333; }
+
+        /* Nội dung văn bản */
+        .doc-no { text-align: left; font-size: 14px; margin: 10px 0; }
+        .doc-title { text-align: center; margin-bottom: 20px; }
+        .doc-title h1 { margin: 0; font-size: 22px; text-transform: uppercase; }
+        .doc-title p { margin: 5px 0; font-style: italic; font-weight: bold; }
+
+        .section-title { font-weight: bold; text-transform: uppercase; margin-top: 15px; text-decoration: underline; }
+        .info-block { margin-bottom: 15px; line-height: 1.5; font-size: 15px; }
+        .info-row { display: flex; margin-bottom: 3px; }
+        .label { font-weight: bold; min-width: 120px; }
+        .dotted-line { flex-grow: 1; border-bottom: 1px dotted #000; margin-left: 5px; }
+
+        /* Bảng hàng hóa */
+        table.data-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        table.data-table th, table.data-table td { border: 1px solid #000; padding: 8px; font-size: 14px; }
+        table.data-table th { background-color: #eee; text-align: center; }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+
+        /* Chữ ký */
+        .footer-sign { display: flex; justify-content: space-between; margin-top: 40px; text-align: center; }
+        .sign-box { width: 45%; }
+        .sign-space { height: 100px; }
+
+        /* Điều khiển */
+        .controls { position: fixed; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
+        button { padding: 10px 15px; cursor: pointer; border: none; border-radius: 4px; color: white; font-weight: bold; }
+        .btn-print { background: #007bff; }
+        .btn-png { background: #28a745; }
+
+        @media print {
+            body { background: none; }
+            .page { margin: 0; box-shadow: none; border: none; width: 100%; }
+            .controls { display: none; }
+            @page { size: A4; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <button class="btn-print" onclick="window.print()">In Phiếu (PDF)</button>
+        <button class="btn-png" onclick="downloadPNG()">Tải ảnh PNG</button>
+    </div>
+
+    <div class="page" id="capture">
+        <div id="watermark">DEMO</div>
+
+        <!-- Header -->
+        <table class="header-table">
+            <tr>
+                <td width="120"><img src="https://titratrading.com/wp-content/uploads/2022/04/Logo-Titaco.png" class="logo-img" alt="Logo"></td>
+                <td class="company-info">
+                    <h2>CÔNG TY TNHH ĐẦU TƯ VÀ PHÁT TRIỂN THƯƠNG MẠI TÍN TÂM</h2>
+                    <p>📍 65 Điện Biên Phủ, Phường Long Xuyên, Tỉnh An Giang</p>
+                    <p>📞 02963 95 99 77 | ✉️ info.tita.gmail.com | 🌐 www.titatrading.com</p>
+                </td>
+            </tr>
+        </table>
+
+        <div class="doc-no">Số: <span id="Sott">......</span></div>
+
+        <div class="doc-title">
+            <h1>BẢN THỎA THUẬN</h1>
+            <p>(V/v: <span id="LoaiThoaThuan">Thỏa thuận sản phẩm</span>)</p>
+        </div>
+
+        <div class="info-block">
+            <p>Căn cứ nhu cầu và khả năng hợp tác của hai bên.</p>
+            <p>Hôm nay ngày <span id="NgayKy">../../....</span>, tại Văn phòng Công ty TNHH Đầu tư và Phát triển Thương mại Tín Tâm chúng tôi gồm có:</p>
+            
+            <p><strong>BÊN A: CÔNG TY TNHH ĐẦU TƯ VÀ PHÁT TRIỂN THƯƠNG MẠI TÍN TÂM</strong></p>
+            <p>Địa chỉ: 65 Điện Biên Phủ, Phường Long Xuyên, Tỉnh An Giang</p>
+            <p>- Điện thoại: 02963 95 99 77 - MST: 1602034463</p>
+            <p>- Đại diện: Ông HUỲNH THANH NHUẬN - Chức vụ: Giám Đốc</p>
+
+            <p><strong>BÊN B: <span id="TenKH">...</span></strong></p>
+            <div class="info-row"><span class="label">Địa chỉ:</span> <span id="DiaChi">...</span></div>
+            <div class="info-row"><span class="label">Điện thoại:</span> <span id="DienThoai">...</span></div>
+            <div class="info-row">
+                <span class="label">MST:</span> <span id="MST">...</span>
+                <span class="label" style="margin-left: 20px;">CCCD:</span> <span id="CCCD">...</span>
+            </div>
+            <div class="info-row"><span class="label">Đại diện:</span> <span id="DaiDien">...</span></div>
+        </div>
+
+        <div class="section-title">ĐIỀU 1: HÀNG HÓA, QUY CÁCH & GIÁ BÁN</div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Stt</th>
+                    <th>Tên Sản Phẩm / Nội Dung</th>
+                    <th>ĐVT</th>
+                    <th>Số lượng</th>
+                    <th>Thành Tiền</th>
+                </tr>
+            </thead>
+            <tbody id="DsThoaThuanTable">
+                <!-- Dữ liệu hàng hóa sẽ render vào đây -->
+                <tr>
+                    <td class="text-center">1</td>
+                    <td id="DsThoaThuan">...</td>
+                    <td class="text-center">Gói</td>
+                    <td class="text-center">1</td>
+                    <td class="text-right"><strong id="TongTien">0</strong></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-right"><strong>TỔNG CỘNG:</strong></td>
+                    <td class="text-right"><strong id="TongTienTotal">0</strong> VNĐ</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="section-title">ĐIỀU 2: THỜI GIAN THỰC HIỆN</div>
+        <div class="info-block">
+            Thời gian để bên B thực hiện từ ngày <span id="TuNgay">...</span> đến ngày <span id="DenNgay">...</span>
+        </div>
+
+        <div class="section-title">ĐIỀU 3: CHIẾT KHẤU & GHI CHÚ</div>
+        <div class="info-block" id="ChietKhau" style="white-space: pre-wrap; font-style: italic;">
+            ...
+        </div>
+        <p><strong>Ghi chú:</strong> <span id="GhiChu">...</span></p>
+        <p><strong>Trạng thái:</strong> <span id="TrangThai">...</span></p>
+
+        <div class="footer-sign">
+            <div class="sign-box">
+                <strong>ĐẠI DIỆN BÊN A</strong><br>Giám đốc
+                <div class="sign-space"></div>
+                <strong>HUỲNH THANH NHUẬN</strong>
+            </div>
+            <div class="sign-box">
+                <strong>ĐẠI DIỆN BÊN B</strong><br>Chủ cửa hàng
+                <div class="sign-space"></div>
+                <strong id="DaiDienKyTen">...</strong>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dữ liệu mặc định (Demo)
+        const demoData = {
+            Sott: "001_25.HĐMB.TITA",
+            LoaiThoaThuan: "Thỏa thuận sản phẩm",
+            NgayKy: "02/02/2025",
+            MaKH: "MAG056",
+            TenKH: "Chị Nga",
+            DaiDien: "YORNG NGA",
+            MST: "16020xxxx",
+            CCCD: "0890xxxxxxx",
+            DiaChi: "Xã Khánh An, Huyện An Phú, Tỉnh An Giang",
+            DienThoai: "0388188747",
+            DsThoaThuan: "Cặp Ấn Độ 240ml & Samurai SOTO 500ml",
+            TongTien: "222,000,000",
+            TuNgay: "10/02/2025",
+            DenNgay: "20/02/2025",
+            ChietKhau: "- Bên B thanh toán đủ 50 thùng Cặp ấn độ 240ml tặng thêm 200 USD.\n- Thanh toán đủ 20 thùng Samurai SOTO tặng thêm 01 thùng cùng loại.",
+            GhiChu: "Giao hàng đúng hẹn",
+            TrangThai: "Đang thực hiện"
+        };
+
+        function init() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let hasData = false;
+
+            // Kiểm tra và đổ dữ liệu
+            Object.keys(demoData).forEach(key => {
+                const val = urlParams.get(key);
+                const element = document.getElementById(key);
+                if (element) {
+                    if (val) {
+                        element.innerText = val;
+                        hasData = true;
+                        if(key === 'TongTien') document.getElementById('TongTienTotal').innerText = val;
+                        if(key === 'DaiDien') document.getElementById('DaiDienKyTen').innerText = val;
+                    } else {
+                        element.innerText = demoData[key];
+                    }
+                }
+            });
+
+            // Nếu không có dữ liệu URL, hiện Watermark DEMO
+            if (!hasData) {
+                document.getElementById('watermark').style.display = 'block';
+            }
+        }
+
+        function downloadPNG() {
+            const btn = document.querySelector('.btn-png');
+            btn.innerText = "Đang xử lý...";
+            html2canvas(document.getElementById('capture'), { scale: 2 }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `ThoaThuan_${document.getElementById('Sott').innerText}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+                btn.innerText = "Tải ảnh PNG";
+            });
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
