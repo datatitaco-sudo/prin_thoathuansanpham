@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -42,7 +41,15 @@
 
         /* Header Layout */
         .header-table { width: 100%; border: none; border-bottom: 2px solid #ffcc00; margin-bottom: 10px; }
-        .logo-img { width: 100px; height: auto; }
+        
+        /* Tối ưu hiển thị logo */
+        .logo-img { 
+            width: 140px; 
+            height: auto; 
+            display: block;
+            object-fit: contain;
+        }
+
         .company-info { text-align: left; padding-left: 15px; }
         .company-info h2 { margin: 0; color: var(--primary-color); font-size: 18px; text-transform: uppercase; }
         .company-info p { margin: 2px 0; font-size: 13px; color: #333; }
@@ -57,7 +64,6 @@
         .info-block { margin-bottom: 15px; line-height: 1.5; font-size: 15px; }
         .info-row { display: flex; margin-bottom: 3px; }
         .label { font-weight: bold; min-width: 120px; }
-        .dotted-line { flex-grow: 1; border-bottom: 1px dotted #000; margin-left: 5px; }
 
         /* Bảng hàng hóa */
         table.data-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
@@ -98,7 +104,10 @@
         <!-- Header -->
         <table class="header-table">
             <tr>
-                <td width="120"><img src="https://titratrading.com/wp-content/uploads/2022/04/Logo-Titaco.png" class="logo-img" alt="Logo"></td>
+                <td width="150">
+                    <!-- Link logo đã được cập nhật tới file LOGOTINTAM 2.png trong cùng thư mục -->
+                    <img src="./LOGOTINTAM%202.png" class="logo-img" alt="Logo Tín Tâm">
+                </td>
                 <td class="company-info">
                     <h2>CÔNG TY TNHH ĐẦU TƯ VÀ PHÁT TRIỂN THƯƠNG MẠI TÍN TÂM</h2>
                     <p>📍 65 Điện Biên Phủ, Phường Long Xuyên, Tỉnh An Giang</p>
@@ -145,7 +154,6 @@
                 </tr>
             </thead>
             <tbody id="DsThoaThuanTable">
-                <!-- Dữ liệu hàng hóa sẽ render vào đây -->
                 <tr>
                     <td class="text-center">1</td>
                     <td id="DsThoaThuan">...</td>
@@ -189,7 +197,6 @@
     </div>
 
     <script>
-        // Dữ liệu mặc định (Demo)
         const demoData = {
             Sott: "001_25.HĐMB.TITA",
             LoaiThoaThuan: "Thỏa thuận sản phẩm",
@@ -214,7 +221,6 @@
             const urlParams = new URLSearchParams(window.location.search);
             let hasData = false;
 
-            // Kiểm tra và đổ dữ liệu
             Object.keys(demoData).forEach(key => {
                 const val = urlParams.get(key);
                 const element = document.getElementById(key);
@@ -230,7 +236,6 @@
                 }
             });
 
-            // Nếu không có dữ liệu URL, hiện Watermark DEMO
             if (!hasData) {
                 document.getElementById('watermark').style.display = 'block';
             }
@@ -239,7 +244,10 @@
         function downloadPNG() {
             const btn = document.querySelector('.btn-png');
             btn.innerText = "Đang xử lý...";
-            html2canvas(document.getElementById('capture'), { scale: 2 }).then(canvas => {
+            html2canvas(document.getElementById('capture'), { 
+                scale: 2,
+                useCORS: true // Hỗ trợ load ảnh từ cùng server
+            }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = `ThoaThuan_${document.getElementById('Sott').innerText}.png`;
                 link.href = canvas.toDataURL();
